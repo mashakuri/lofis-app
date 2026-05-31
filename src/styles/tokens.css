@@ -1,0 +1,33 @@
+:root {
+  --phone-w: 390px;
+  --phone-h: 844px;
+  --font: 'Inter', system-ui, sans-serif;
+
+  --white: #ffffff;
+  --black: #000000;
+  --text: #0a0a0a;
+  --muted: #6b7280;
+  --nav-active: #4a90d9;
+  --nav-idle: #9ca3af;
+
+  --map-bg: #e8ede3;
+  --board-bg: #c5a191;
+  --card-gray: #d9d9d9;
+  --card-light: #f8f8f8;
+  --card-mid: #939393;
+  --pink: #e5c2c2;
+  --blue: #c2e1e5;
+  --yellow: #e5e5c2;
+  --mint: #c2e5d8;
+
+  --pin-red: #ef4444;
+  --pin-green: #22c55e;
+  --pin-purple: #a855f7;
+  --pin-orange: #f97316;
+
+  --radius-card: 25px;
+  --radius-pill: 999px;
+  --shadow-note: 0 4px 4px rgba(0, 0, 0, 0.25);
+  --nav-h: 72px;
+  --status-h: 44px;
+}

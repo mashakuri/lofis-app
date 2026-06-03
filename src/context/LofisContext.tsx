@@ -1,9 +1,11 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
-import type { BulletinNote, Role } from '../types';
+import { useAuth } from './AuthContext';
+import type { BulletinNote } from '../types';
 
 type Ctx = {
-  role: Role;
-  setRole: (r: Role) => void;
+  role: 'student' | 'organizer' | null;
+  canSave: boolean;
+  canPost: boolean;
   saved: Set<string>;
   toggleSave: (id: string) => void;
   notes: BulletinNote[];
@@ -13,14 +15,14 @@ type Ctx = {
 const LofisContext = createContext<Ctx | null>(null);
 
 const DEFAULT_NOTES: BulletinNote[] = [
-  { id: 'n1', color: 'var(--pink)', title: 'ACM Meetup' },
-  { id: 'n2', color: 'var(--blue)', title: 'Design Workshop' },
-  { id: 'n3', color: 'var(--yellow)', title: 'Study Session' },
-  { id: 'n4', color: 'var(--mint)', title: 'Club Social' },
+  { id: 'n1', image: true, title: 'thebutton' },
+  { id: 'n2', image: false },
+  { id: 'n3', image: false },
+  { id: 'n4', image: false },
 ];
 
 export function LofisProvider({ children }: { children: ReactNode }) {
-  const [role, setRole] = useState<Role>('student');
+  const { role } = useAuth();
   const [saved, setSaved] = useState<Set<string>>(new Set());
   const [notes, setNotes] = useState(DEFAULT_NOTES);
 
@@ -32,10 +34,18 @@ export function LofisProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const addNote = useCallback((n: BulletinNote) => setNotes((p) => [n, ...p]), []);
+  const addNote = useCallback((n: BulletinNote) => setNotes((p) => [n, ...p.slice(0, 3)]), []);
 
   const value = useMemo(
-    () => ({ role, setRole, saved, toggleSave, notes, addNote }),
+    () => ({
+      role,
+      canSave: role === 'student',
+      canPost: role === 'organizer',
+      saved,
+      toggleSave,
+      notes,
+      addNote,
+    }),
     [role, saved, toggleSave, notes, addNote],
   );
 

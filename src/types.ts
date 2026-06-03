@@ -13,6 +13,7 @@ export interface EventPin {
 
 export interface BulletinNote {
   id: string;
-  color: string;
   title?: string;
+  image?: boolean;
+  color?: string;
 }

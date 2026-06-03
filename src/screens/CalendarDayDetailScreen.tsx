@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './screens.css';
-
 /** Figma: 13:480 — Erin - Calendar (day, detailed blocks) */
 export function CalendarDayDetailScreen() {
   const [scope, setScope] = useState<'all' | 'me'>('me');

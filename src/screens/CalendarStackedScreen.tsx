@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './screens.css';
-
 /** Figma: 13:643 — Erin - Calendar (month, stacked dots) */
 export function CalendarStackedScreen() {
   const nav = useNavigate();

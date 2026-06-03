@@ -1,33 +1,48 @@
 :root {
   --phone-w: 390px;
   --phone-h: 844px;
-  --font: 'Inter', system-ui, sans-serif;
 
-  --white: #ffffff;
+  /* hifis color palette (145:82) */
+  --red: #ff3d3d;
+  --yellow: #ffe552;
+  --blue: #4a7bfa;
+  --navy: #182b49;
+  --orange: #ffa144;
+  --neon: #95f489;
   --black: #000000;
+  --cream: #fff7e7;
+  --cream-alt: #fffbe7;
+
+  /* Bulletin cork (Figma bulletin-greyish) */
+  --cork: #ba9066;
+  --note-pink: #e5c2c2;
+  --note-blue: #c2e1e5;
+  --note-yellow: #e5e5c2;
+  --note-mint: #c2e5d8;
+  --pink: var(--note-pink);
+  --mint: var(--note-mint);
+
+  /* Map */
+  --map-bg: #e8ede3;
+  --filter-border: #d1d5dc;
+  --filter-text: #364153;
+  --map-active: #4a90d9;
+
+  /* Legacy aliases */
+  --white: #ffffff;
   --text: #0a0a0a;
   --muted: #6b7280;
-  --nav-active: #4a90d9;
-  --nav-idle: #9ca3af;
-
-  --map-bg: #e8ede3;
-  --board-bg: #c5a191;
   --card-gray: #d9d9d9;
-  --card-light: #f8f8f8;
-  --card-mid: #939393;
-  --pink: #e5c2c2;
-  --blue: #c2e1e5;
-  --yellow: #e5e5c2;
-  --mint: #c2e5d8;
 
-  --pin-red: #ef4444;
-  --pin-green: #22c55e;
-  --pin-purple: #a855f7;
-  --pin-orange: #f97316;
+  --font-lato: 'Lato', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-body: var(--font-lato);
 
-  --radius-card: 25px;
+  --radius-tile: 25px;
   --radius-pill: 999px;
   --shadow-note: 0 4px 4px rgba(0, 0, 0, 0.25);
-  --nav-h: 72px;
+  --shadow-search: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 0 2px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.1);
+  --nav-h: 75px;
   --status-h: 44px;
 }

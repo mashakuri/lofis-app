@@ -32,3 +32,4 @@ Phone frame: **390×844px**. Bottom nav: **Map · Pin · Profile**.
 - **Student** — save events from the map; list on profile
 - **Organizer** — **+** on bulletin → create → editor → publish
 - **Map** — Leaflet + OpenStreetMap centered on UCSD
+# lofis-app

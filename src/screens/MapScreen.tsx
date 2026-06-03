@@ -92,9 +92,10 @@ function Checkbox({ checked, onChange, tickColor = '#182b49' }: { checked: boole
 
 export function MapScreen() {
   const navigate       = useNavigate();
-  const mapRef         = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
-  const markersRef     = useRef<Map<string, any>>(new Map());
+  const mapRef            = useRef<HTMLDivElement>(null);
+  const mapInstanceRef    = useRef<any>(null);
+  const markersRef        = useRef<Map<string, any>>(new Map());
+  const networkMarkersRef = useRef<any[]>([]);
 
   const [filter, setFilter]           = useState('All');
   const [showFilter, setShowFilter]   = useState(false);
@@ -145,6 +146,37 @@ export function MapScreen() {
     tryInit();
     return () => { mapInstanceRef.current?.remove(); mapInstanceRef.current = null; markersRef.current.clear(); };
   }, []);
+
+  // ── Network people markers ───────────────────────────────────────
+  useEffect(() => {
+    if (!mapInstanceRef.current || !window.L) return;
+    const NETWORK_PEOPLE = [
+      { lat: 32.8821, lng: -117.2365, color: '#ffa144' },
+      { lat: 32.8808, lng: -117.2350, color: '#ff3d3d' },
+      { lat: 32.8795, lng: -117.2318, color: '#ff3d3d' },
+      { lat: 32.8785, lng: -117.2330, color: '#95f489' },
+      { lat: 32.8800, lng: -117.2310, color: '#4a7bfa' },
+      { lat: 32.8812, lng: -117.2295, color: '#182b49' },
+      { lat: 32.8775, lng: -117.2345, color: '#ffa144' },
+      { lat: 32.8830, lng: -117.2380, color: '#4a7bfa' },
+      { lat: 32.8768, lng: -117.2360, color: '#95f489' },
+      { lat: 32.8840, lng: -117.2325, color: '#ff3d3d' },
+    ];
+    if (overlay === 'network') {
+      NETWORK_PEOPLE.forEach(p => {
+        const icon = window.L.divIcon({
+          className: '',
+          html: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 3px ${p.color})"><circle cx="12" cy="8" r="4" fill="${p.color}"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="${p.color}"/></svg>`,
+          iconSize: [22, 22], iconAnchor: [11, 11],
+        });
+        const m = window.L.marker([p.lat, p.lng], { icon }).addTo(mapInstanceRef.current);
+        networkMarkersRef.current.push(m);
+      });
+    } else {
+      networkMarkersRef.current.forEach(m => m.remove());
+      networkMarkersRef.current = [];
+    }
+  }, [overlay]);
 
   // ── Filter markers by category ───────────────────────────────────
   useEffect(() => {
@@ -681,17 +713,6 @@ export function MapScreen() {
           }}>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="#fff7e7" strokeWidth="1.8" strokeLinecap="round"/></svg>
           </button>
-          {[
-            { top: '33%', left: '28%', color: '#ffa144' }, { top: '40%', left: '34%', color: '#ff3d3d' },
-            { top: '38%', left: '70%', color: '#ff3d3d' }, { top: '45%', left: '62%', color: '#95f489' },
-            { top: '43%', left: '76%', color: '#4a7bfa' }, { top: '50%', left: '55%', color: '#182b49' },
-            { top: '47%', left: '68%', color: '#fff7e7' }, { top: '55%', left: '50%', color: '#ffa144' },
-            { top: '53%', left: '39%', color: '#4a7bfa' }, { top: '60%', left: '60%', color: '#95f489' },
-          ].map((m, i) => (
-            <div key={i} style={{ position: 'absolute', top: m.top, left: m.left, width: 22, height: 22, transform: 'translate(-50%,-50%)' }}>
-              <img src={assets.networkPerson} alt="" style={{ width: '100%', height: '100%', filter: `drop-shadow(0 0 2px ${m.color})` }} onError={e => (e.currentTarget.style.display = 'none')} />
-            </div>
-          ))}
         </div>
       )}
     </div>

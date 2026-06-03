@@ -18,7 +18,8 @@ const CORK_BG = {
 export function BulletinEditorScreen() {
   const nav = useNavigate();
   const [params] = useSearchParams();
-  const isUpload = params.get('type') === 'upload';
+  const isUpload    = params.get('type') === 'upload';
+  const posterColor = params.get('color') ?? '#ffea75';
 
   const [editOpen, setEditOpen] = useState(false);
   const [description, setDescription] = useState('');
@@ -70,7 +71,7 @@ export function BulletinEditorScreen() {
           width: 240,
           height: 320,
           borderRadius: 5,
-          background: isUpload ? '#e3e3e3' : '#ffea75',
+          background: isUpload ? '#e3e3e3' : posterColor,
           boxShadow: '0 4px 4px rgba(0,0,0,0.25)',
         }} />
       </div>

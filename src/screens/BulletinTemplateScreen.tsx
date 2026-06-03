@@ -103,7 +103,7 @@ export function BulletinTemplateScreen() {
         {TEMPLATES.map(t => (
           <button
             key={t.id}
-            onClick={() => nav('/bulletin/editor?type=template')}
+            onClick={() => nav(`/bulletin/editor?type=template&color=${encodeURIComponent(t.color)}`)}
             style={{
               width: 149, height: 203, borderRadius: 5,
               background: t.color, border: '2px solid rgba(0,0,0,0.1)',

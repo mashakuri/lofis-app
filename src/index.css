@@ -11,3 +11,6 @@ body {
 }
 button { font-family: inherit; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
+
+/* Soften OpenStreetMap tiles so the map feels closer to the old Carto look */
+.leaflet-tile-pane { filter: saturate(0.5) brightness(1.04) contrast(0.92); }

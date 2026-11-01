@@ -72,7 +72,7 @@ export function LoginScreen() {
           background: '#000', zIndex: 200, pointerEvents: 'none',
         }} />
 
-        {/* SOLSTICE title */}
+        {/* SOLSPACE title */}
         <div style={{
           flexShrink: 0,
           textAlign:        'center',
@@ -85,7 +85,7 @@ export function LoginScreen() {
           paintOrder:       'stroke fill',
           userSelect:       'none',
           paddingTop:       160,
-        }}>SOLSTICE</div>
+        }}>SOLSPACE</div>
 
         {/* Login card */}
         <div style={{

@@ -190,7 +190,7 @@ export function ProfileScreen() {
               background: '#fff7e7', overflow: 'hidden',
             }}>
               <img src={assets.profileAvatar} alt=""
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'contain', padding: 8, boxSizing: 'border-box' }}
                 onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
             <div style={{ paddingTop: 4 }}>

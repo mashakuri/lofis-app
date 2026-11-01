@@ -189,8 +189,8 @@ export function ProfileScreen() {
               width: 107, height: 107, borderRadius: 25, flexShrink: 0,
               background: '#fff7e7', overflow: 'hidden',
             }}>
-              <img src={assets.profileAvatar} alt=""
-                style={{ width: '100%', height: '100%', objectFit: 'contain', padding: 8, boxSizing: 'border-box' }}
+              <img src="/fluffy-avatar.png" alt="Fluffy"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
                 onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
             <div style={{ paddingTop: 4 }}>

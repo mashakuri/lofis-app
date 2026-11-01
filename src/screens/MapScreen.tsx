@@ -104,7 +104,7 @@ export function MapScreen() {
 
   // Calendar range state
   const [calMonth, setCalMonth]       = useState(new Date().getMonth());
-  const [calYear]                     = useState(new Date().getFullYear());
+  const [calYear, setCalYear]         = useState(new Date().getFullYear());
   const [rangeStart, setRangeStart]   = useState<number | null>(null);
   const [rangeEnd, setRangeEnd]       = useState<number | null>(null);
 
@@ -422,9 +422,9 @@ export function MapScreen() {
                 <div style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   background: '#182b49', borderRadius: 25,
-                  height: 38, width: 139, padding: '0 9px',
+                  height: 38, minWidth: 139, padding: '0 9px', gap: 8,
                 }}>
-                  <button onClick={() => setCalMonth(m => m === 0 ? 11 : m - 1)} style={{
+                  <button onClick={() => { if (calMonth === 0) { setCalMonth(11); setCalYear(y => y - 1); } else setCalMonth(calMonth - 1); }} style={{
                     width: 16, height: 16, background: 'none', border: 'none',
                     cursor: 'pointer', padding: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -436,8 +436,8 @@ export function MapScreen() {
                   <span style={{
                     fontFamily: 'Inter, sans-serif', fontSize: 16, fontWeight: 700,
                     color: '#fff7e7', letterSpacing: '0.01em',
-                  }}>{MONTHS[calMonth]}</span>
-                  <button onClick={() => setCalMonth(m => m === 11 ? 0 : m + 1)} style={{
+                  }}>{MONTHS[calMonth]} <span style={{ fontWeight: 400, opacity: 0.75 }}>{calYear}</span></span>
+                  <button onClick={() => { if (calMonth === 11) { setCalMonth(0); setCalYear(y => y + 1); } else setCalMonth(calMonth + 1); }} style={{
                     width: 16, height: 16, background: 'none', border: 'none',
                     cursor: 'pointer', padding: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -687,7 +687,7 @@ export function MapScreen() {
         <div style={{ position: 'absolute', inset: 0, zIndex: 20 }} onClick={() => setOverlay(null)}>
           <div style={{
             position: 'absolute', top: 128, left: 21, right: 21,
-            background: 'rgba(59,73,95,0.7)', borderRadius: 15,
+            background: 'rgba(59,73,95,1)', borderRadius: 15,
             padding: '16px', maxHeight: '72%', overflowY: 'auto',
           }} onClick={e => e.stopPropagation()}>
             <div style={{ textAlign: 'center', marginBottom: 10 }}>

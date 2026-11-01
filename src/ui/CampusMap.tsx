@@ -54,12 +54,13 @@ export function CampusMap({
         center={UCSD}
         zoom={16}
         zoomControl={false}
-        attributionControl={false}
+        attributionControl
         preferCanvas
         className="map-leaflet"
       >
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; OpenStreetMap"
           updateWhenZooming={false}
           updateWhenIdle
           keepBuffer={4}

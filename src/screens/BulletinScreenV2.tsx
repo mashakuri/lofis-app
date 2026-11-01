@@ -115,7 +115,7 @@ function BulletinHeader() {
         paintOrder:       'stroke fill',
         userSelect:       'none',
       }}>
-        <span style={{ display: 'block' }}>COMMMUNITY</span>
+        <span style={{ display: 'block' }}>COMMUNITY</span>
         <span style={{ display: 'block', marginLeft: 10 }}>BULLETIN</span>
       </div>
     </div>

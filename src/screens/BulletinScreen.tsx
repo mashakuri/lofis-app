@@ -47,7 +47,7 @@ export function BulletinScreen() {
             letterSpacing: 1,
             textTransform: 'uppercase',
           }}>
-            COMMMUNITY<br />BULLETIN
+            COMMUNITY<br />BULLETIN
           </div>
         </div>
 

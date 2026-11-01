@@ -126,11 +126,19 @@ export function MapScreen() {
         zoomControl: false, attributionControl: true,
       });
       map.attributionControl.setPrefix(false);
-      // OpenStreetMap tiles: free, no API key (Carto now requires one and showed a watermark)
-      window.L.tileLayer(
-        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        { maxZoom: 19, attribution: '&copy; OpenStreetMap' }
-      ).addTo(map);
+      // Basemap: OpenFreeMap "liberty" style (free, no API key) matches the hi-fi look.
+      // Falls back to plain OpenStreetMap tiles if the MapLibre plugin didn't load.
+      if (window.L.maplibreGL) {
+        window.L.maplibreGL({
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          attribution: '&copy; OpenFreeMap &copy; OpenStreetMap',
+        }).addTo(map);
+      } else {
+        window.L.tileLayer(
+          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+          { maxZoom: 19, attribution: '&copy; OpenStreetMap', className: 'osm-tiles' }
+        ).addTo(map);
+      }
 
       PINS.forEach(pin => {
         const icon = window.L.divIcon({
@@ -263,10 +271,10 @@ export function MapScreen() {
       {/* ── Map canvas ── */}
       <div ref={mapRef} style={{ position: 'absolute', inset: 0, zIndex: 0 }} />
 
-      {/* ── Right FAB column — hidden when calendar is open ── */}
+      {/* ── Right FAB column — hidden while calendar, messages or friend map is open ── */}
       <div style={{
         position: 'absolute', top: 48, right: 12, zIndex: 50,
-        display: overlay === 'calendar' ? 'none' : 'flex',
+        display: overlay ? 'none' : 'flex',
         flexDirection: 'column', alignItems: 'flex-end', gap: 10,
       }}>
         <button onClick={() => { setShowFilter(s => !s); setOverlay(null); setSelectedPin(null); }} style={{
@@ -658,6 +666,23 @@ export function MapScreen() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* MESSAGE CENTER OVERLAY                                         */}
       {/* ══════════════════════════════════════════════════════════════ */}
+      {/* Exit button for messages + friend map — same spot and style as the calendar's X */}
+      {(overlay === 'messages' || overlay === 'network') && (
+        <button
+          onClick={() => setOverlay(null)}
+          aria-label="Close"
+          style={{
+            position: 'absolute', top: 48, right: 12, zIndex: 50,
+            width: 50, height: 50, borderRadius: '50%',
+            background: '#fff7e7', border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="#182b49" strokeWidth="2" strokeLinecap="round"/></svg>
+        </button>
+      )}
+
       {overlay === 'messages' && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 20 }} onClick={() => setOverlay(null)}>
           <div style={{
@@ -665,13 +690,6 @@ export function MapScreen() {
             background: 'rgba(59,73,95,0.7)', borderRadius: 15,
             padding: '16px', maxHeight: '72%', overflowY: 'auto',
           }} onClick={e => e.stopPropagation()}>
-            <button onClick={() => setOverlay(null)} style={{
-              position: 'absolute', top: 10, right: 10, width: 28, height: 28, borderRadius: '50%',
-              background: 'rgba(255,247,231,0.15)', border: 'none', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="#fff7e7" strokeWidth="1.8" strokeLinecap="round"/></svg>
-            </button>
             <div style={{ textAlign: 'center', marginBottom: 10 }}>
               <img src={assets.overlayMascotMsg} alt="" style={{ width: 112, height: 97, objectFit: 'contain', display: 'block', margin: '0 auto 4px' }} onError={e => (e.currentTarget.style.display = 'none')} />
               <div style={{ fontFamily: 'Lato, sans-serif', fontSize: 20, color: 'white' }}>MESSAGE CENTER</div>
@@ -706,15 +724,6 @@ export function MapScreen() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {overlay === 'network' && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 5, pointerEvents: 'none' }}>
-          <button onClick={() => setOverlay(null)} style={{
-            position: 'absolute', top: 48, right: 12, pointerEvents: 'auto',
-            width: 28, height: 28, borderRadius: '50%',
-            background: 'rgba(24,43,73,0.75)', border: 'none', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-          }}>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="#fff7e7" strokeWidth="1.8" strokeLinecap="round"/></svg>
-          </button>
         </div>
       )}
     </div>

@@ -123,11 +123,13 @@ export function MapScreen() {
       if (!window.L) { setTimeout(tryInit, 200); return; }
       const map = window.L.map(mapRef.current!, {
         center: UCSD, zoom: 15,
-        zoomControl: false, attributionControl: false,
+        zoomControl: false, attributionControl: true,
       });
+      map.attributionControl.setPrefix(false);
+      // OpenStreetMap tiles: free, no API key (Carto now requires one and showed a watermark)
       window.L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png',
-        { subdomains: 'abcd', maxZoom: 20 }
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        { maxZoom: 19, attribution: '&copy; OpenStreetMap' }
       ).addTo(map);
 
       PINS.forEach(pin => {
